@@ -8,509 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Barlow:wght@400;500&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg:          #09090b;
-            --surface:     #111115;
-            --surface-2:   #18181d;
-            --border:      #22222a;
-            --border-2:    #2e2e38;
-            --accent:      #c9ff00;
-            --accent-dim:  rgba(201,255,0,0.07);
-            --accent-dim2: rgba(201,255,0,0.14);
-            --text:        #f2f2f5;
-            --text-2:      #8a8a96;
-            --text-3:      #46464f;
-            --ease:        cubic-bezier(0.4,0,0.2,1);
-            --radius:      14px;
-        }
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Barlow', sans-serif;
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: fixed; inset: 0;
-            background-image:
-                linear-gradient(var(--border) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 52px 52px;
-            opacity: 0.5;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body::after {
-            content: '';
-            position: fixed; inset: 0;
-            background:
-                radial-gradient(ellipse 70% 50% at 50% -5%, rgba(201,255,0,0.055) 0%, transparent 65%),
-                radial-gradient(ellipse 100% 60% at 50% 105%, rgba(0,0,0,0.85) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .wrap {
-            position: relative; z-index: 1;
-            max-width: 1160px;
-            margin: 0 auto;
-            padding: 0 28px;
-        }
-
-        /* ════ NAV ════ */
-        header { border-bottom: 1px solid var(--border); }
-
-        nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 22px 0;
-        }
-
-        .nav-logo {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--accent);
-            text-decoration: none;
-            letter-spacing: 0.06em;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-link {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--text-3);
-            text-decoration: none;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 7px 14px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            transition: all 0.2s var(--ease);
-        }
-
-        .nav-link:hover {
-            color: var(--text);
-            border-color: var(--border-2);
-            background: var(--surface);
-        }
-
-        .nav-link.accent {
-            color: var(--bg);
-            background: var(--accent);
-            border-color: var(--accent);
-            font-weight: 500;
-        }
-
-        .nav-link.accent:hover { background: #d8ff33; border-color: #d8ff33; }
-
-        /* ════ HERO ════ */
-        .hero { padding: 80px 0 64px; }
-
-        .hero-kicker {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--accent);
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-            animation: fadeUp 0.6s var(--ease) 0.05s both;
-        }
-
-        .hero-kicker::before {
-            content: '';
-            display: block;
-            width: 28px; height: 1px;
-            background: var(--accent);
-        }
-
-        .hero-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-weight: 800;
-            font-size: clamp(5.5rem, 14vw, 12rem);
-            line-height: 0.88;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-            margin-bottom: 28px;
-            animation: fadeUp 0.6s var(--ease) 0.12s both;
-        }
-
-        .hero-title em {
-            font-style: normal;
-            color: var(--accent);
-        }
-
-        .hero-sub {
-            font-size: 0.95rem;
-            color: var(--text-2);
-            max-width: 420px;
-            line-height: 1.75;
-            animation: fadeUp 0.6s var(--ease) 0.2s both;
-        }
-
-        /* ════ SECTION LABEL ════ */
-        .section-eyebrow {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-3);
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        /* ════ DEVICE CARDS ════ */
-        .devices { padding-bottom: 80px; }
-
-        .devices-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .device-card {
-            position: relative;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 36px;
-            text-decoration: none;
-            color: inherit;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 440px;
-            transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
-        }
-
-        .device-card.active { cursor: pointer; }
-        .device-card.inactive { cursor: default; opacity: 0.52; }
-
-        .device-card.active::before {
-            content: '';
-            position: absolute; inset: 0;
-            background: var(--accent-dim);
-            opacity: 0;
-            transition: opacity 0.35s var(--ease);
-            pointer-events: none;
-        }
-
-        .device-card.active:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 1px var(--accent), 0 16px 48px rgba(201,255,0,0.08);
-            transform: translateY(-3px);
-        }
-
-        .device-card.active:hover::before { opacity: 1; }
-
-        .device-card.active::after {
-            content: '';
-            position: absolute; top: 0; right: 0;
-            border-style: solid;
-            border-width: 0 40px 40px 0;
-            border-color: transparent var(--accent) transparent transparent;
-            opacity: 0;
-            transition: opacity 0.3s var(--ease);
-        }
-
-        .device-card.active:hover::after { opacity: 1; }
-
-        .card-head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 28px;
-            position: relative; z-index: 1;
-        }
-
-        .card-codename {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            border-radius: 4px;
-            border: 1px solid rgba(201,255,0,0.25);
-            color: var(--accent);
-            background: var(--accent-dim2);
-        }
-
-        .inactive .card-codename {
-            color: var(--text-3);
-            background: transparent;
-            border-color: var(--border);
-        }
-
-        .card-status {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .s-active { color: var(--accent); }
-        .s-soon   { color: var(--text-3); }
-
-        .card-visual {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative; z-index: 1;
-            padding: 12px 0;
-            min-height: 180px;
-        }
-
-        .card-visual img {
-            max-height: 190px;
-            width: auto;
-            object-fit: contain;
-            transition: transform 0.4s var(--ease), filter 0.4s var(--ease);
-            filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
-            display: none;
-        }
-
-        .card-visual img.loaded { display: block; }
-
-        .device-card.active:hover .card-visual img {
-            transform: scale(1.05) translateY(-4px);
-            filter: drop-shadow(0 16px 32px rgba(201,255,0,0.12));
-        }
-
-        .card-visual .fallback-svg {
-            opacity: 0.12;
-            transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
-        }
-
-        .card-visual img.loaded ~ .fallback-svg { display: none; }
-
-        .device-card.active:hover .fallback-svg {
-            opacity: 0.28;
-            transform: scale(1.04);
-        }
-
-        .card-body { position: relative; z-index: 1; }
-
-        .card-name {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: clamp(1.9rem, 3vw, 2.6rem);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -0.01em;
-            line-height: 1;
-            margin-bottom: 18px;
-        }
-
-        .card-specs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px 24px;
-            margin-bottom: 24px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
-        }
-
-        .spec-item { display: flex; flex-direction: column; gap: 3px; }
-
-        .spec-k {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.62rem;
-            color: var(--text-3);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .spec-v {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.82rem;
-            color: var(--text-2);
-        }
-
-        .card-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-2);
-            transition: color 0.25s var(--ease), gap 0.25s var(--ease);
-        }
-
-        .device-card.active:hover .card-cta { color: var(--accent); gap: 16px; }
-
-        .cta-circle {
-            width: 30px; height: 30px;
-            border: 1px solid currentColor;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
-        }
-
-        .device-card.active:hover .cta-circle {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #000;
-        }
-
-        /* ════ SUPPORT ════ */
-        .support {
-            border-top: 1px solid var(--border);
-            padding: 72px 0;
-        }
-
-        .support-desc {
-            font-size: 0.9rem;
-            color: var(--text-2);
-            margin-bottom: 24px;
-            max-width: 480px;
-            line-height: 1.7;
-        }
-
-        .support-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-
-        .support-link {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 18px 20px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-            min-width: 0;
-            transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease);
-        }
-
-        .support-link:hover {
-            border-color: var(--accent);
-            background: var(--accent-dim);
-            transform: translateX(3px);
-        }
-
-        .support-icon {
-            width: 34px; height: 34px;
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .icon-upi    { background: linear-gradient(135deg,#667eea,#764ba2); color:#fff; }
-        .icon-kofi   { background: linear-gradient(135deg,#ff6433,#ff8c42); color:#fff; }
-        .icon-paypal { background: linear-gradient(135deg,#009cde,#003087); color:#fff; }
-
-        .support-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .support-name {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            line-height: 1;
-            margin-bottom: 3px;
-        }
-
-        .support-type {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.63rem;
-            color: var(--text-3);
-            letter-spacing: 0.06em;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .support-arrow {
-            color: var(--text-3);
-            font-size: 0.9rem;
-            flex-shrink: 0;
-            transition: transform 0.2s var(--ease), color 0.2s var(--ease);
-        }
-
-        .support-link:hover .support-arrow { transform: translateX(4px); color: var(--accent); }
-
-        /* ════ FOOTER ════ */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 28px 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .foot-text {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.68rem;
-            color: var(--text-3);
-            letter-spacing: 0.06em;
-        }
-
-        .foot-text a { color: var(--text-2); text-decoration: none; transition: color 0.2s; }
-        .foot-text a:hover { color: var(--text); }
-
-        .foot-disclaimer {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.62rem;
-            color: var(--text-3);
-            max-width: 320px;
-            text-align: right;
-            line-height: 1.5;
-        }
-
-        /* ════ ANIMATIONS ════ */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(22px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .anim-1 { animation: fadeUp 0.55s var(--ease) 0.30s both; }
-        .anim-2 { animation: fadeUp 0.55s var(--ease) 0.42s both; }
-        .anim-3 { animation: fadeUp 0.55s var(--ease) 0.54s both; }
-
-        /* ════ RESPONSIVE ════ */
-        @media (max-width: 720px) {
-            .devices-grid { grid-template-columns: 1fr; }
-            .hero { padding: 48px 0 40px; }
-            .devices { padding-bottom: 56px; }
-            footer { flex-direction: column; gap: 10px; text-align: center; }
-            .foot-disclaimer { text-align: center; max-width: 100%; }
-            .support-grid { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 480px) {
-            .wrap { padding: 0 18px; }
-            .device-card { padding: 24px; min-height: 360px; }
-            .hero-title { font-size: 4.8rem; }
-        }
-    </style>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
 
@@ -525,22 +24,19 @@
         </nav>
     </header>
 
-    <!-- HERO -->
     <section class="hero">
         <p class="hero-kicker">Custom Firmware Hub</p>
         <h1 class="hero-title">SD<em>870</em></h1>
         <p class="hero-sub">
             ROMs, kernels, recoveries and flashing guides
-            for two devices sharing the same silicon.
+            for the two SD870 devices we maintain.
         </p>
     </section>
 
-    <!-- DEVICE CARDS -->
     <section class="devices">
         <p class="section-eyebrow anim-1">// Supported Devices</p>
         <div class="devices-grid">
 
-            <!-- PIPA -->
             <a href="pipa/index.html" class="device-card active anim-2">
                 <div class="card-head">
                     <span class="card-codename">pipa</span>
@@ -590,7 +86,6 @@
                 </div>
             </a>
 
-            <!-- LEMONADE -->
             <div class="device-card inactive anim-3">
                 <div class="card-head">
                     <span class="card-codename">lemonade</span>
@@ -638,16 +133,14 @@
         </div>
     </section>
 
-    <!-- SUPPORT -->
     <section class="support" id="support">
         <p class="section-eyebrow">// Support</p>
         <p class="support-desc">
-            This web took time to create and now to maintain.
+            This site took time to build and takes time to maintain.
             So sending moni wen?
         </p>
         <div class="support-grid">
 
-            <!-- Ko-fi -->
             <a href="https://ko-fi.com/nullpointer1101" target="_blank" rel="noopener" class="support-link">
                 <div class="support-icon icon-kofi">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.67-2.059 3.015z"/></svg>
@@ -658,7 +151,6 @@
                 <span class="support-arrow">→</span>
             </a>
 
-            <!-- UPI -->
             <a href="#" class="support-link" id="upi-btn">
                 <div class="support-icon icon-upi">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-1.25 17.292l-4.5-4.364 1.857-1.858 2.643 2.506 5.643-5.784 1.857 1.857-7.5 7.643z"/></svg>
@@ -670,7 +162,6 @@
                 <span class="support-arrow">→</span>
             </a>
 
-            <!-- PayPal -->
             <a href="https://www.paypal.com/paypalme/sheoranpranshu" target="_blank" rel="noopener" class="support-link">
                 <div class="support-icon icon-paypal">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>
@@ -684,7 +175,6 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
         <span class="foot-text">
             By <a href="https://mufasaxz.vercel.app" target="_blank" rel="noopener">Mufasa</a>

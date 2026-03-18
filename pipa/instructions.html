@@ -8,516 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg:         #09090b;
-            --surface:    #111115;
-            --surface-2:  #18181d;
-            --border:     #22222a;
-            --border-2:   #2e2e38;
-            --accent:     #c9ff00;
-            --accent-dim: rgba(201,255,0,0.07);
-            --text:       #f2f2f5;
-            --text-2:     #8a8a96;
-            --text-3:     #46464f;
-            --warn:       #f59e0b;
-            --warn-dim:   rgba(245,158,11,0.08);
-            --danger:     #ef4444;
-            --info:       #3b82f6;
-            --info-dim:   rgba(59,130,246,0.08);
-            --success:    #22c55e;
-            --ease:       cubic-bezier(0.4,0,0.2,1);
-            --radius:     12px;
-        }
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Barlow', sans-serif;
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: fixed; inset: 0;
-            background-image:
-                linear-gradient(var(--border) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 52px 52px;
-            opacity: 0.45;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body::after {
-            content: '';
-            position: fixed; inset: 0;
-            background: radial-gradient(ellipse 80% 40% at 50% -5%, rgba(201,255,0,0.04) 0%, transparent 65%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .wrap {
-            position: relative; z-index: 1;
-            max-width: 1160px;
-            margin: 0 auto;
-            padding: 0 28px;
-        }
-
-        header { border-bottom: 1px solid var(--border); }
-
-        nav {
-            display: flex;
-            align-items: center;
-            padding: 20px 0;
-            gap: 10px;
-        }
-
-        .nav-back {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--text-3);
-            text-decoration: none;
-            letter-spacing: 0.08em;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            transition: all 0.2s var(--ease);
-        }
-
-        .nav-back:hover { color: var(--text); border-color: var(--border-2); background: var(--surface); }
-
-        .nav-crumb {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--text-3);
-            text-decoration: none;
-            letter-spacing: 0.08em;
-            transition: color 0.2s;
-        }
-
-        .nav-crumb:hover { color: var(--text-2); }
-
-        .nav-sep { font-family: 'Azeret Mono', monospace; font-size: 0.72rem; color: var(--text-3); }
-
-        .nav-current { font-family: 'Azeret Mono', monospace; font-size: 0.72rem; color: var(--accent); letter-spacing: 0.06em; }
-
-        .page-header {
-            padding: 52px 0 44px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .page-kicker {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--accent);
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 14px;
-        }
-
-        .page-kicker::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
-
-        .page-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-weight: 800;
-            font-size: clamp(2.6rem, 6vw, 5rem);
-            line-height: 0.92;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .page-desc { font-size: 0.9rem; color: var(--text-2); max-width: 520px; line-height: 1.7; }
-
-        .section-eyebrow {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-3);
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        .content { padding: 60px 0; }
-
-        .before-begin { margin-bottom: 56px; }
-
-        .notice {
-            background: var(--warn-dim);
-            border: 1px solid rgba(245,158,11,0.2);
-            border-left: 3px solid var(--warn);
-            border-radius: var(--radius);
-            padding: 20px 24px;
-            margin-bottom: 16px;
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
-        }
-
-        .notice-icon { color: var(--warn); flex-shrink: 0; margin-top: 2px; }
-
-        .notice p { font-size: 0.88rem; color: var(--text-2); line-height: 1.65; }
-        .notice strong { color: var(--text); font-weight: 500; }
-
-        .prereq-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 10px;
-            margin-top: 24px;
-        }
-
-        .prereq-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 16px 18px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-        }
-
-        .prereq-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 7px; }
-
-        .prereq-item p { font-size: 0.87rem; color: var(--text-2); line-height: 1.6; }
-        .prereq-item strong { color: var(--text); font-weight: 500; }
-
-        code {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.82em;
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            padding: 1px 6px;
-            border-radius: 4px;
-            color: var(--accent);
-        }
-
-        .step { margin-bottom: 56px; padding-bottom: 56px; border-bottom: 1px solid var(--border); }
-        .step:last-of-type { border-bottom: none; margin-bottom: 0; }
-
-        .step-head { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
-
-        .step-num {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--bg);
-            background: var(--accent);
-            padding: 4px 12px;
-            border-radius: 4px;
-            flex-shrink: 0;
-        }
-
-        .step-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: clamp(1.4rem, 3vw, 1.9rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: -0.01em;
-            line-height: 1;
-        }
-
-        .step-body { display: grid; grid-template-columns: 1fr 360px; gap: 32px; align-items: start; }
-        .step-body.full { grid-template-columns: 1fr; }
-
-        .platform-tabs {
-            display: flex;
-            border: 1px solid var(--border);
-            border-bottom: none;
-            border-radius: var(--radius) var(--radius) 0 0;
-            overflow: hidden;
-            width: fit-content;
-        }
-
-        .ptab-btn {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 9px 18px;
-            background: transparent;
-            border: none;
-            border-right: 1px solid var(--border);
-            color: var(--text-3);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            transition: all 0.2s var(--ease);
-            white-space: nowrap;
-        }
-
-        .ptab-btn:last-child { border-right: none; }
-        .ptab-btn:hover { color: var(--text); background: var(--surface-2); }
-        .ptab-btn.active { color: var(--bg); background: var(--accent); }
-
-        .ptab-panels {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 0 var(--radius) var(--radius) var(--radius);
-            padding: 28px;
-        }
-
-        .ptab-content { display: none; }
-        .ptab-content.active { display: block; }
-
-        .ptab-content h4 {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            margin-bottom: 16px;
-        }
-
-        .ptab-content p { font-size: 0.88rem; color: var(--text-2); line-height: 1.7; margin-bottom: 14px; }
-        .ptab-content p:last-child { margin-bottom: 0; }
-        .ptab-content a { color: var(--accent); text-decoration: none; }
-        .ptab-content a:hover { text-decoration: underline; }
-
-        .step-sub {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--text-3);
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            margin: 20px 0 10px;
-            display: block;
-        }
-
-        .step-sub:first-child { margin-top: 0; }
-
-        .code-block {
-            position: relative;
-            background: #0d0d10;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 14px 52px 14px 16px;
-            margin: 10px 0;
-            overflow-x: auto;
-        }
-
-        .code-block code {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.82rem;
-            color: var(--success);
-            background: transparent;
-            border: none;
-            padding: 0;
-            white-space: pre;
-            display: block;
-        }
-
-        .copy-btn {
-            position: absolute;
-            top: 9px; right: 9px;
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            color: var(--text-3);
-            padding: 4px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 0.06em;
-            transition: all 0.2s var(--ease);
-        }
-
-        .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
-        .copy-btn.copied { color: var(--success); border-color: var(--success); }
-
-        .inline-note {
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
-            background: var(--info-dim);
-            border: 1px solid rgba(59,130,246,0.18);
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin-top: 12px;
-        }
-
-        .inline-note svg { flex-shrink: 0; color: var(--info); margin-top: 2px; }
-        .inline-note p { font-size: 0.83rem; color: var(--text-2); margin-bottom: 0 !important; line-height: 1.6; }
-
-        .warn-note {
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
-            background: var(--warn-dim);
-            border: 1px solid rgba(245,158,11,0.18);
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin-top: 12px;
-        }
-
-        .warn-note svg { flex-shrink: 0; color: var(--warn); margin-top: 2px; }
-        .warn-note p { font-size: 0.83rem; color: var(--text-2); margin-bottom: 0 !important; line-height: 1.6; }
-        .warn-note strong { color: var(--text); font-weight: 500; }
-
-        .body-text { font-size: 0.88rem; color: var(--text-2); line-height: 1.7; margin-bottom: 14px; }
-        .body-text strong { color: var(--text); font-weight: 500; }
-
-        .video-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            position: sticky;
-            top: 24px;
-        }
-
-        .video-thumb {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: var(--surface-2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            border-bottom: 1px solid var(--border);
-            position: relative;
-        }
-
-        .video-thumb::before {
-            content: '';
-            position: absolute; inset: 0;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent, transparent 8px,
-                rgba(255,255,255,0.015) 8px,
-                rgba(255,255,255,0.015) 9px
-            );
-        }
-
-        .video-play {
-            width: 48px; height: 48px;
-            border: 1px solid var(--border-2);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            position: relative; z-index: 1;
-            color: var(--text-3);
-        }
-
-        .video-coming {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--text-3);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            position: relative; z-index: 1;
-        }
-
-        .video-info { padding: 16px 18px; }
-
-        .video-platform {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--accent);
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-
-        .video-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            color: var(--text-2);
-            margin-bottom: 6px;
-        }
-
-        .video-badge {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.62rem;
-            color: var(--text-3);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 3px 10px;
-            border: 1px solid var(--border-2);
-            border-radius: 50px;
-            display: inline-block;
-        }
-
-        .errors { padding: 56px 0 0; }
-
-        .error-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 10px;
-        }
-
-        .error-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--danger);
-            border-radius: var(--radius);
-            padding: 20px;
-        }
-
-        .error-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            color: var(--danger);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .error-card p { font-size: 0.85rem; color: var(--text-2); line-height: 1.65; }
-
-        footer {
-            border-top: 1px solid var(--border);
-            margin-top: 72px;
-            padding: 26px 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .foot-text { font-family: 'Azeret Mono', monospace; font-size: 0.67rem; color: var(--text-3); letter-spacing: 0.06em; }
-        .foot-text a { color: var(--text-2); text-decoration: none; transition: color 0.2s; }
-        .foot-text a:hover { color: var(--text); }
-
-        .foot-disclaimer { font-family: 'Azeret Mono', monospace; font-size: 0.61rem; color: var(--text-3); max-width: 320px; text-align: right; line-height: 1.55; }
-
-        @media (max-width: 900px) {
-            .step-body { grid-template-columns: 1fr; }
-            .video-card { position: static; }
-            .platform-tabs { width: 100%; }
-            .ptab-btn { flex: 1; justify-content: center; }
-            .ptab-panels { border-radius: 0 0 var(--radius) var(--radius); }
-        }
-
-        @media (max-width: 640px) {
-            .wrap { padding: 0 18px; }
-            .page-header { padding: 36px 0 32px; }
-            .content { padding: 40px 0; }
-            .step { margin-bottom: 40px; padding-bottom: 40px; }
-            .prereq-grid, .error-grid { grid-template-columns: 1fr; }
-            footer { flex-direction: column; gap: 10px; text-align: center; }
-            .foot-disclaimer { text-align: center; max-width: 100%; }
-        }
-    </style>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/instructions.css">
 </head>
 <body>
 
@@ -525,16 +17,18 @@
 
     <header>
         <nav>
-            <a href="../index.html" class="nav-back">
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                    <path d="M6.5 1.5L3 5l3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Home
-            </a>
-            <span class="nav-sep">/</span>
-            <a href="index.html" class="nav-crumb">pipa</a>
-            <span class="nav-sep">/</span>
-            <span class="nav-current">instructions</span>
+            <div class="nav-left">
+                <a href="../index.html" class="nav-back">
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                        <path d="M6.5 1.5L3 5l3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Home
+                </a>
+                <span class="nav-sep">/</span>
+                <a href="index.html" class="nav-crumb">pipa</a>
+                <span class="nav-sep">/</span>
+                <span class="nav-current">instructions</span>
+            </div>
         </nav>
     </header>
 
@@ -596,101 +90,86 @@
             </div>
         </section>
 
+        <div class="video-banner">
+            <span class="video-banner-label">// Video Tutorial</span>
+            <a href="#" class="video-banner-link" target="_blank" rel="noopener">Full Flashing Guide — Coming Soon →</a>
+        </div>
+
         <section class="step">
             <div class="step-head">
                 <span class="step-num">Step 01</span>
                 <h2 class="step-title">Prepare Your Environment</h2>
             </div>
 
-            <div class="step-body">
-                <div>
-                    <p class="section-eyebrow">// Select your platform</p>
+            <p class="section-eyebrow">// Select your platform</p>
 
-                    <div class="platform-tabs">
-                        <button class="ptab-btn active" data-tab="windows">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
-                            Windows
-                        </button>
-                        <button class="ptab-btn" data-tab="linux">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/>
-                            </svg>
-                            Linux
-                        </button>
-                        <button class="ptab-btn" data-tab="termux">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
-                            </svg>
-                            Termux
-                        </button>
-                    </div>
+            <div class="platform-tabs">
+                <button class="ptab-btn active" data-tab="windows">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+                    Windows
+                </button>
+                <button class="ptab-btn" data-tab="linux">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/>
+                    </svg>
+                    Linux
+                </button>
+                <button class="ptab-btn" data-tab="termux">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+                    </svg>
+                    Termux
+                </button>
+            </div>
 
-                    <div class="ptab-panels">
-                        <div class="ptab-content active" id="tab-windows">
-                            <h4>Windows Setup</h4>
-                            <p>Download and install the ADB &amp; Fastboot package below. The installer runs in about 15 seconds.</p>
-                            <p><a href="https://github.com/K3V1991/ADB-and-FastbootPlusPlus/releases/download/v1.1.1/ADB-and-Fastboot++_v1.1.1.msi" target="_blank" rel="noopener">ADB &amp; Fastboot++ by K3V1991 →</a></p>
-                            <span class="step-sub">// Open a command prompt in your ROM folder</span>
-                            <p>Open the folder where you downloaded your ROM files. Right-click on an empty area inside the folder and select <strong style="color:var(--text)">Open in Terminal</strong> or <strong style="color:var(--text)">Open Command Prompt window here</strong>.</p>
-                            <div class="warn-note">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                                <p>Use <strong>Command Prompt only</strong> — not PowerShell, and not run as Administrator.</p>
-                            </div>
-                        </div>
-
-                        <div class="ptab-content" id="tab-linux">
-                            <h4>Linux Setup</h4>
-                            <p>Install Android tools using your distro's package manager.</p>
-                            <div class="code-block">
-                                <code>sudo apt install adb fastboot</code>
-                                <button class="copy-btn">Copy</button>
-                            </div>
-                            <div class="code-block">
-                                <code>sudo dnf install android-tools</code>
-                                <button class="copy-btn">Copy</button>
-                            </div>
-                            <div class="code-block">
-                                <code>sudo pacman -S android-tools</code>
-                                <button class="copy-btn">Copy</button>
-                            </div>
-                            <span class="step-sub">// Open a terminal in your ROM folder</span>
-                            <p>Open your file manager and navigate to the folder where your ROM files are located. Right-click on an empty area inside the folder and select <strong style="color:var(--text)">Open Terminal Here</strong> or <strong style="color:var(--text)">Open in Terminal</strong>.</p>
-                            <p>If your file manager does not support this, open a terminal manually and navigate to the folder:</p>
-                            <div class="code-block">
-                                <code>cd /path/to/your/rom/folder</code>
-                                <button class="copy-btn">Copy</button>
-                            </div>
-                        </div>
-
-                        <div class="ptab-content" id="tab-termux">
-                            <h4>Termux (Android → Android)</h4>
-                            <p>Install ADB &amp; Fastboot on your host Android device using the setup repo below.</p>
-                            <p><a href="https://github.com/nullpointer1101/termux-adb-fastboot.git" target="_blank" rel="noopener">ADB &amp; Fastboot setup repo →</a></p>
-                            <span class="step-sub">// Navigate to your ROM folder</span>
-                            <p>Your ROM files need to be accessible from Termux. For example, if your ROM files are in <code>Downloads/myrom</code>, run:</p>
-                            <div class="code-block">
-                                <code>cd storage/shared/Download/myrom</code>
-                                <button class="copy-btn">Copy</button>
-                            </div>
-                            <p>Replace <code>Download/myrom</code> with the actual path to your ROM files. All fastboot and adb commands in the next steps should be run from this directory.</p>
-                        </div>
+            <div class="ptab-panels">
+                <div class="ptab-content active" id="tab-windows">
+                    <h4>Windows Setup</h4>
+                    <p>Download and install the ADB &amp; Fastboot package below. The installer runs in about 15 seconds.</p>
+                    <p><a href="https://github.com/K3V1991/ADB-and-FastbootPlusPlus/releases/download/v1.1.1/ADB-and-Fastboot++_v1.1.1.msi" target="_blank" rel="noopener">ADB &amp; Fastboot++ by K3V1991 →</a></p>
+                    <span class="step-sub">// Open Command Prompt in your ROM folder</span>
+                    <p>Open the folder where you downloaded your ROM files. Right-click on an empty area inside the folder and select <strong style="color:var(--text)">Open in Terminal</strong> or <strong style="color:var(--text)">Open Command Prompt window here</strong>.</p>
+                    <div class="warn-note">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        <p>Use <strong>Command Prompt only</strong> — not PowerShell, and not run as Administrator.</p>
                     </div>
                 </div>
 
-                <div>
-                    <div class="video-card">
-                        <div class="video-thumb">
-                            <div class="video-play">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
-                            </div>
-                            <span class="video-coming">◌ Coming Soon</span>
-                        </div>
-                        <div class="video-info">
-                            <div class="video-platform" id="video-platform">Windows</div>
-                            <div class="video-title">Full Flashing Video Guide</div>
-                            <span class="video-badge">Video Tutorial</span>
-                        </div>
+                <div class="ptab-content" id="tab-linux">
+                    <h4>Linux Setup</h4>
+                    <p>Install Android tools using your distro's package manager.</p>
+                    <div class="code-block">
+                        <code>sudo apt install adb fastboot</code>
+                        <button class="copy-btn">Copy</button>
                     </div>
+                    <div class="code-block">
+                        <code>sudo dnf install android-tools</code>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="code-block">
+                        <code>sudo pacman -S android-tools</code>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <span class="step-sub">// Open a terminal in your ROM folder</span>
+                    <p>Open your file manager and navigate to the folder where your ROM files are. Right-click an empty area inside the folder and select <strong style="color:var(--text)">Open Terminal Here</strong> or <strong style="color:var(--text)">Open in Terminal</strong>.</p>
+                    <p>If your file manager doesn't support this, open a terminal manually and navigate there:</p>
+                    <div class="code-block">
+                        <code>cd /path/to/your/rom/folder</code>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div class="ptab-content" id="tab-termux">
+                    <h4>Termux (Android → Android)</h4>
+                    <p>Install ADB &amp; Fastboot on your host Android device using the repo below.</p>
+                    <p><a href="https://github.com/YOUR-REPO-HERE" target="_blank" rel="noopener">ADB &amp; Fastboot setup repo →</a></p>
+                    <span class="step-sub">// Navigate to your ROM folder</span>
+                    <p>Your ROM files need to be accessible from Termux. If your ROM files are in <code>Downloads/myrom</code>, run:</p>
+                    <div class="code-block">
+                        <code>cd storage/shared/Download/myrom</code>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <p>Replace <code>Download/myrom</code> with the actual path to your ROM files. Run all fastboot and adb commands from this directory.</p>
                 </div>
             </div>
         </section>
@@ -701,48 +180,44 @@
                 <h2 class="step-title">Flash Partitions</h2>
             </div>
 
-            <div class="step-body full">
-                <div>
-                    <p class="body-text">
-                        Boot the Xiaomi Pad 6 into <strong>Fastboot Mode</strong> by holding
-                        <strong>Power + Volume Down</strong> while the device is off,
-                        then connect it to your PC or host device.
-                    </p>
+            <p class="body-text">
+                Boot the Xiaomi Pad 6 into <strong>Fastboot Mode</strong> by holding
+                <strong>Power + Volume Down</strong> while the device is off,
+                then connect it to your PC or host device.
+            </p>
 
-                    <span class="step-sub">// Flash required images</span>
+            <span class="step-sub">// Flash required images</span>
 
-                    <div class="code-block">
-                        <code>fastboot flash boot boot.img</code>
-                        <button class="copy-btn">Copy</button>
-                    </div>
-                    <div class="code-block">
-                        <code>fastboot flash dtbo dtbo.img</code>
-                        <button class="copy-btn">Copy</button>
-                    </div>
-                    <div class="code-block">
-                        <code>fastboot flash vendor_boot vendor_boot.img</code>
-                        <button class="copy-btn">Copy</button>
-                    </div>
+            <div class="code-block">
+                <code>fastboot flash boot boot.img</code>
+                <button class="copy-btn">Copy</button>
+            </div>
+            <div class="code-block">
+                <code>fastboot flash dtbo dtbo.img</code>
+                <button class="copy-btn">Copy</button>
+            </div>
+            <div class="code-block">
+                <code>fastboot flash vendor_boot vendor_boot.img</code>
+                <button class="copy-btn">Copy</button>
+            </div>
 
-                    <span class="step-sub" style="margin-top:24px;">// Wipe super partition (recommended for clean flash)</span>
+            <span class="step-sub" style="margin-top:24px;">// Wipe super partition (recommended for clean flash)</span>
 
-                    <div class="code-block">
-                        <code>fastboot wipe-super super_empty.img</code>
-                        <button class="copy-btn">Copy</button>
-                    </div>
+            <div class="code-block">
+                <code>fastboot wipe-super super_empty.img</code>
+                <button class="copy-btn">Copy</button>
+            </div>
 
-                    <div class="inline-note">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                        <p>If <code>wipe-super</code> fails, it is safe to skip and continue.</p>
-                    </div>
+            <div class="inline-note">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <p>If <code>wipe-super</code> fails, it is safe to skip and continue.</p>
+            </div>
 
-                    <span class="step-sub" style="margin-top:24px;">// Reboot into recovery</span>
+            <span class="step-sub" style="margin-top:24px;">// Reboot into recovery</span>
 
-                    <div class="code-block">
-                        <code>fastboot reboot recovery</code>
-                        <button class="copy-btn">Copy</button>
-                    </div>
-                </div>
+            <div class="code-block">
+                <code>fastboot reboot recovery</code>
+                <button class="copy-btn">Copy</button>
             </div>
         </section>
 
@@ -752,57 +227,50 @@
                 <h2 class="step-title">Sideload the ROM</h2>
             </div>
 
-            <div class="step-body full">
-                <div>
-                    <p class="body-text">
-                        On the tablet (now in Recovery), select
-                        <strong>Apply Update → Apply from ADB</strong>,
-                        then run the sideload command from your host device.
-                    </p>
+            <p class="body-text">
+                On the tablet (now in Recovery), select
+                <strong>Apply Update → Apply from ADB</strong>,
+                then run the sideload command from your host device.
+            </p>
 
-                    <span class="step-sub">// Sideload ROM</span>
+            <span class="step-sub">// Sideload ROM</span>
 
-                    <div class="code-block">
-                        <code>adb sideload rom_filename.zip</code>
-                        <button class="copy-btn">Copy</button>
-                    </div>
+            <div class="code-block">
+                <code>adb sideload rom_filename.zip</code>
+                <button class="copy-btn">Copy</button>
+            </div>
 
-                    <div class="warn-note">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-                        </svg>
-                        <p>The progress may stall at ~47% or display values above 100%. This is normal — watch the <strong>tablet screen</strong>. If it shows "Success" or "Step 2/2", the sideload completed successfully.</p>
-                    </div>
+            <div class="warn-note">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                <p>The progress may stall at ~47% or display values above 100%. This is normal — watch the <strong>tablet screen</strong>. If it shows "Success" or "Step 2/2", the sideload completed successfully.</p>
+            </div>
 
-                    <span class="step-sub" style="margin-top:24px;">// Optional: sideload GApps</span>
+            <span class="step-sub" style="margin-top:24px;">// Optional: sideload GApps</span>
 
-                    <p class="body-text">
-                        If the ROM is Vanilla (no GApps included), reboot back into recovery and sideload your GApps package the same way before formatting data.
-                    </p>
+            <p class="body-text">
+                If the ROM is Vanilla (no GApps), reboot back into recovery and sideload your GApps package the same way before formatting data.
+            </p>
 
-                    <span class="step-sub">// Format data</span>
+            <span class="step-sub">// Format data</span>
 
-                    <p class="body-text">
-                        Format data is required when flashing a ROM for the first time or switching to a different ROM.
-                        If you are updating the same ROM, you can skip this step unless the ROM's instructions say otherwise.
-                    </p>
+            <p class="body-text">
+                Format data is required when flashing a ROM for the first time or switching to a different ROM.
+                If you are updating the same ROM, you can skip this step unless the ROM's release post says otherwise.
+            </p>
 
-                    <p class="body-text">
-                        From the recovery main menu go to <strong>Factory Reset → Format Data</strong> and confirm. Then reboot to system.
-                    </p>
+            <p class="body-text">
+                From the recovery main menu go to <strong>Factory Reset → Format Data</strong> and confirm. Then reboot to system.
+            </p>
 
-                    <div class="notice">
-                        <svg class="notice-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-                        </svg>
-                        <p>
-                            When format data <strong>is required</strong>, do not skip it.
-                            Skipping will likely cause bootloops or unexpected behaviour on first boot.
-                        </p>
-                    </div>
-                </div>
+            <div class="notice">
+                <svg class="notice-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                <p>When format data <strong>is required</strong>, do not skip it. Skipping will likely cause bootloops or unexpected behaviour on first boot.</p>
             </div>
         </section>
 
@@ -854,16 +322,12 @@
 </div>
 
 <script>
-    const videoLabels = { windows: 'Windows', linux: 'Linux', termux: 'Termux (Android)' };
-
     document.querySelectorAll('.ptab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.ptab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.ptab-content').forEach(p => p.classList.remove('active'));
             btn.classList.add('active');
             document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-            const label = document.getElementById('video-platform');
-            if (label) label.textContent = videoLabels[btn.dataset.tab] || '';
         });
     });
 

@@ -8,452 +8,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg:         #09090b;
-            --surface:    #111115;
-            --surface-2:  #18181d;
-            --border:     #22222a;
-            --border-2:   #2e2e38;
-            --accent:     #c9ff00;
-            --accent-dim: rgba(201,255,0,0.07);
-            --accent-d2:  rgba(201,255,0,0.13);
-            --text:       #f2f2f5;
-            --text-2:     #8a8a96;
-            --text-3:     #46464f;
-            --ease:       cubic-bezier(0.4,0,0.2,1);
-            --radius:     12px;
-        }
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Barlow', sans-serif;
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: fixed; inset: 0;
-            background-image:
-                linear-gradient(var(--border) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 52px 52px;
-            opacity: 0.45;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body::after {
-            content: '';
-            position: fixed; inset: 0;
-            background: radial-gradient(ellipse 80% 40% at 50% -5%, rgba(201,255,0,0.04) 0%, transparent 65%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .wrap {
-            position: relative; z-index: 1;
-            max-width: 1160px;
-            margin: 0 auto;
-            padding: 0 28px;
-        }
-
-        /* ════ NAV ════ */
-        header { border-bottom: 1px solid var(--border); }
-
-        nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px 0;
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-back {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--text-3);
-            text-decoration: none;
-            letter-spacing: 0.08em;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            transition: all 0.2s var(--ease);
-        }
-
-        .nav-back:hover {
-            color: var(--text);
-            border-color: var(--border-2);
-            background: var(--surface);
-        }
-
-        .nav-sep {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--text-3);
-        }
-
-        .nav-current {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--accent);
-            letter-spacing: 0.06em;
-        }
-
-        .nav-right { display: flex; gap: 8px; }
-
-        .nav-link {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--text-3);
-            text-decoration: none;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 6px 14px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            transition: all 0.2s var(--ease);
-        }
-
-        .nav-link:hover {
-            color: var(--text);
-            border-color: var(--border-2);
-            background: var(--surface);
-        }
-
-        /* ════ PAGE HEADER ════ */
-        .page-header {
-            padding: 56px 0 48px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .page-kicker {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--accent);
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 14px;
-        }
-
-        .page-kicker::before {
-            content: '';
-            display: block;
-            width: 24px; height: 1px;
-            background: var(--accent);
-        }
-
-        .page-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-weight: 800;
-            font-size: clamp(3rem, 8vw, 6.5rem);
-            line-height: 0.9;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .page-meta {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .meta-tag {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-3);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-        }
-
-        /* ════ SECTION EYEBROW ════ */
-        .section-eyebrow {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-3);
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        /* ════ RELEASES ════ */
-        .releases {
-            padding: 72px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .releases-tabs {
-            display: flex;
-            gap: 0;
-            margin-bottom: 32px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            width: fit-content;
-        }
-
-        .tab-btn {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 10px 22px;
-            background: transparent;
-            border: none;
-            border-right: 1px solid var(--border);
-            color: var(--text-3);
-            cursor: pointer;
-            transition: all 0.2s var(--ease);
-        }
-
-        .tab-btn:last-child { border-right: none; }
-        .tab-btn:hover { color: var(--text); background: var(--surface-2); }
-        .tab-btn.active { color: var(--bg); background: var(--accent); }
-
-        .releases-placeholder {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 80px 24px;
-            border: 1px dashed var(--border-2);
-            border-radius: var(--radius);
-            gap: 16px;
-        }
-
-        .releases-placeholder.active { display: flex; }
-
-        .placeholder-icon {
-            width: 56px; height: 56px;
-            border: 1px solid var(--border-2);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 4px;
-        }
-
-        .placeholder-icon svg { opacity: 0.25; }
-
-        .placeholder-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            color: var(--text-2);
-        }
-
-        .placeholder-sub {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--text-3);
-            letter-spacing: 0.06em;
-        }
-
-        .placeholder-badge {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 5px 14px;
-            border: 1px solid var(--border-2);
-            border-radius: 50px;
-            color: var(--text-3);
-        }
-
-        /* ════ SUPPORT ════ */
-        .support { padding: 72px 0; }
-
-        .support-intro { margin-bottom: 40px; }
-
-        .support-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-weight: 800;
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            text-transform: uppercase;
-            letter-spacing: -0.01em;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        .support-desc {
-            font-size: 0.9rem;
-            color: var(--text-2);
-            max-width: 500px;
-            line-height: 1.7;
-        }
-
-        .maintainer-block { margin-bottom: 36px; }
-        .maintainer-block:last-child { margin-bottom: 0; }
-
-        .maintainer-label {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.68rem;
-            color: var(--text-3);
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .maintainer-label::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-
-        .donate-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-
-        .donate-link {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 16px 18px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-            min-width: 0;
-            transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease);
-        }
-
-        .donate-link:hover {
-            border-color: var(--accent);
-            background: var(--accent-dim);
-            transform: translateX(3px);
-        }
-
-        .donate-link.empty {
-            opacity: 0.35;
-            pointer-events: none;
-        }
-
-        .donate-icon {
-            width: 32px; height: 32px;
-            border-radius: 7px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .icon-upi    { background: linear-gradient(135deg,#667eea,#764ba2); color:#fff; }
-        .icon-kofi   { background: linear-gradient(135deg,#ff6433,#ff8c42); color:#fff; }
-        .icon-paypal { background: linear-gradient(135deg,#009cde,#003087); color:#fff; }
-
-        .donate-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .donate-name {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            line-height: 1;
-            margin-bottom: 3px;
-        }
-
-        .donate-handle {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.6rem;
-            color: var(--text-3);
-            letter-spacing: 0.06em;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .donate-arrow {
-            color: var(--text-3);
-            font-size: 0.85rem;
-            flex-shrink: 0;
-            transition: transform 0.2s var(--ease), color 0.2s var(--ease);
-        }
-
-        .donate-link:hover .donate-arrow { transform: translateX(4px); color: var(--accent); }
-
-        /* ════ FOOTER ════ */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 26px 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .foot-text {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.67rem;
-            color: var(--text-3);
-            letter-spacing: 0.06em;
-        }
-
-        .foot-text a { color: var(--text-2); text-decoration: none; transition: color 0.2s; }
-        .foot-text a:hover { color: var(--text); }
-
-        .foot-disclaimer {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 0.61rem;
-            color: var(--text-3);
-            max-width: 320px;
-            text-align: right;
-            line-height: 1.55;
-        }
-
-        /* ════ RESPONSIVE ════ */
-        @media (max-width: 720px) {
-            .donate-row { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 640px) {
-            .wrap { padding: 0 18px; }
-            .page-header { padding: 40px 0 36px; }
-            .releases, .support { padding: 52px 0; }
-            footer { flex-direction: column; gap: 10px; text-align: center; }
-            .foot-disclaimer { text-align: center; max-width: 100%; }
-            .nav-link { display: none; }
-            .releases-tabs { width: 100%; }
-            .tab-btn { flex: 1; }
-        }
-    </style>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/device.css">
 </head>
 <body>
 
 <div class="wrap">
 
-    <!-- NAV -->
     <header>
         <nav>
             <div class="nav-left">
@@ -472,7 +33,6 @@
         </nav>
     </header>
 
-    <!-- PAGE HEADER -->
     <section class="page-header">
         <p class="page-kicker">pipa</p>
         <h1 class="page-title">Xiaomi Pad 6</h1>
@@ -483,7 +43,6 @@
         </div>
     </section>
 
-    <!-- RELEASES -->
     <section class="releases" id="releases">
         <p class="section-eyebrow">// Releases</p>
 
@@ -493,42 +52,11 @@
             <button class="tab-btn" data-tab="recoveries">Recoveries</button>
         </div>
 
-        <div class="releases-placeholder active" id="tab-roms">
-            <div class="placeholder-icon">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
-                </svg>
-            </div>
-            <p class="placeholder-title">ROMs</p>
-            <p class="placeholder-sub">Listings are being set up</p>
-            <span class="placeholder-badge">◌ Coming Soon</span>
-        </div>
-
-        <div class="releases-placeholder" id="tab-kernels">
-            <div class="placeholder-icon">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
-                </svg>
-            </div>
-            <p class="placeholder-title">Kernels</p>
-            <p class="placeholder-sub">Listings are being set up</p>
-            <span class="placeholder-badge">◌ Coming Soon</span>
-        </div>
-
-        <div class="releases-placeholder" id="tab-recoveries">
-            <div class="placeholder-icon">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-                </svg>
-            </div>
-            <p class="placeholder-title">Recoveries</p>
-            <p class="placeholder-sub">Listings are being set up</p>
-            <span class="placeholder-badge">◌ Coming Soon</span>
-        </div>
-
+        <div class="releases-placeholder active" id="tab-roms"></div>
+        <div class="releases-placeholder" id="tab-kernels"></div>
+        <div class="releases-placeholder" id="tab-recoveries"></div>
     </section>
 
-    <!-- SUPPORT -->
     <section class="support" id="support">
         <div class="support-intro">
             <p class="section-eyebrow">// Support Your ROM Dev</p>
@@ -539,7 +67,6 @@
             </p>
         </div>
 
-        <!-- ── Null Pointer ── -->
         <div class="maintainer-block">
             <p class="maintainer-label">Null Pointer</p>
             <div class="donate-row">
@@ -578,7 +105,6 @@
             </div>
         </div>
 
-        <!-- ── Mufasa ── -->
         <div class="maintainer-block">
             <p class="maintainer-label">Mufasa</p>
             <div class="donate-row">
@@ -618,7 +144,6 @@
 
     </section>
 
-    <!-- FOOTER -->
     <footer>
         <span class="foot-text">
             By <a href="https://mufasaxz.vercel.app" target="_blank" rel="noopener">Mufasa</a>
