@@ -1,0 +1,21 @@
+[
+  {
+    "id": "ofox-pipa-np",
+    "name": "OrangeFox",
+    "android": "15",
+    "type": "Recovery",
+    "status": "Official",
+    "maintainer": {
+      "name": "Null Pointer",
+      "id": "nullpointer1101"
+    },
+    "updated": "2026-02-28",
+    "dirty_flash": null,
+    "notes": "Flash via fastboot only. Use boot.img from recovery package.",
+    "links": {
+      "download": "",
+      "mirror": "",
+      "support": ""
+    }
+  }
+]

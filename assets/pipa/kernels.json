@@ -1,0 +1,21 @@
+[
+  {
+    "id": "example-kernel",
+    "name": "KernelSU Next",
+    "android": "15",
+    "type": "KernelSU",
+    "status": "Official",
+    "maintainer": {
+      "name": "Null Pointer",
+      "id": "nullpointer1101"
+    },
+    "updated": "2026-03-10",
+    "dirty_flash": true,
+    "notes": "Flash after ROM zip. Supports KernelSU Next module system.",
+    "links": {
+      "download": "",
+      "mirror": "",
+      "support": ""
+    }
+  }
+]

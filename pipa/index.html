@@ -52,6 +52,7 @@
             <button class="tab-btn" data-tab="recoveries">Recoveries</button>
         </div>
 
+        <!-- Panels — device.js injects content here -->
         <div class="releases-placeholder active" id="tab-roms"></div>
         <div class="releases-placeholder" id="tab-kernels"></div>
         <div class="releases-placeholder" id="tab-recoveries"></div>
@@ -158,24 +159,16 @@
 
 </div>
 
+<!-- UPI deep-link (kept inline — simple one-liner) -->
 <script>
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const tabPanels = document.querySelectorAll('.releases-placeholder');
-
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            tabBtns.forEach(b => b.classList.remove('active'));
-            tabPanels.forEach(p => p.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-        });
-    });
-
     document.getElementById('np-upi').addEventListener('click', e => {
         e.preventDefault();
         window.location.href = 'upi://pay?pa=nullpointe1101@ptaxis&pn=NullPointer';
     });
 </script>
+
+<!-- Release data renderer -->
+<script src="../js/device.js"></script>
 
 </body>
 </html>

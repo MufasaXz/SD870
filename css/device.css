@@ -78,6 +78,7 @@
 .tab-btn:hover { color: var(--text); background: var(--surface-2); }
 .tab-btn.active { color: var(--bg); background: var(--accent); }
 
+/* ─── Old placeholder (kept for compatibility, now hidden by .rel-list) ─── */
 .releases-placeholder {
     display: none;
     min-height: 100px;
@@ -88,6 +89,200 @@
 
 .releases-placeholder.active { display: block; }
 
+/* ─── Release list ──────────────────────────────────────────────────────── */
+.rel-list {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0 var(--radius) var(--radius) var(--radius);
+    overflow: hidden;
+}
+
+.rel-row {
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px;
+    transition: background 0.18s var(--ease);
+}
+
+.rel-row:last-child { border-bottom: none; }
+.rel-row:hover { background: var(--surface-2); }
+
+.rel-main {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    align-items: center;
+    gap: 24px;
+}
+
+/* Name + notes */
+.rel-name-col { min-width: 0; }
+
+.rel-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.rel-notes {
+    font-size: 0.82rem;
+    color: var(--text-2);
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* Badges column */
+.rel-meta-col {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.rel-android {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: var(--accent-d2);
+    border: 1px solid rgba(201,255,0,0.22);
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.rel-badge {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.badge-official   { color: var(--success); background: rgba(34,197,94,0.09);  border: 1px solid rgba(34,197,94,0.2); }
+.badge-unofficial { color: var(--warn);    background: var(--warn-dim);         border: 1px solid rgba(245,158,11,0.2); }
+.badge-type       { color: var(--text-2);  background: var(--surface-2);        border: 1px solid var(--border); }
+.badge-ok         { color: var(--success); background: rgba(34,197,94,0.07);   border: 1px solid rgba(34,197,94,0.18); }
+.badge-warn       { color: var(--warn);    background: var(--warn-dim);         border: 1px solid rgba(245,158,11,0.18); }
+
+/* Date + maintainer column */
+.rel-date-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    min-width: 108px;
+}
+
+.rel-date {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-2);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.rel-maintainer {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-3);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+/* Action buttons column */
+.rel-actions-col {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.rel-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Azeret Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 7px 13px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-2);
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s var(--ease);
+}
+
+.rel-btn:hover { border-color: var(--border-2); color: var(--text); background: var(--surface-2); }
+
+.rel-btn-primary {
+    color: var(--bg);
+    background: var(--accent);
+    border-color: var(--accent);
+    font-weight: 500;
+}
+
+.rel-btn-primary:hover { background: #d8ff33; border-color: #d8ff33; color: var(--bg); }
+
+.rel-btn-disabled {
+    opacity: 0.35;
+    pointer-events: none;
+    cursor: default;
+}
+
+/* Empty state */
+.rel-empty {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0 var(--radius) var(--radius) var(--radius);
+    padding: 52px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+}
+
+.rel-empty p {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* ─── Skeleton loading ──────────────────────────────────────────────────── */
+@keyframes shimmer {
+    0%   { background-position: -600px 0; }
+    100% { background-position:  600px 0; }
+}
+
+.skel-line,
+.skel-pill,
+.skel-btn {
+    background: linear-gradient(90deg, var(--surface-2) 25%, var(--border) 50%, var(--surface-2) 75%);
+    background-size: 600px 100%;
+    animation: shimmer 1.4s infinite linear;
+    border-radius: 4px;
+}
+
+.skel-name  { width: 140px; height: 16px; }
+.skel-note  { width: 240px; height: 11px; margin-top: 8px; }
+.skel-pill  { width: 56px;  height: 22px; border-radius: 4px; }
+.skel-date  { width: 80px;  height: 11px; }
+.skel-maint { width: 60px;  height: 10px; margin-top: 4px; }
+.skel-btn   { width: 90px;  height: 30px; border-radius: 6px; }
+
+/* ─── Support section ───────────────────────────────────────────────────── */
 .support { padding: 72px 0; }
 
 .support-intro { margin-bottom: 40px; }
@@ -148,7 +343,6 @@
 }
 
 .donate-link:hover { border-color: var(--accent); background: var(--accent-dim); transform: translateX(3px); }
-
 .donate-link.empty { opacity: 0.35; pointer-events: none; }
 
 .donate-icon {
@@ -193,6 +387,18 @@
 
 .donate-link:hover .donate-arrow { transform: translateX(4px); color: var(--accent); }
 
+/* ─── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .rel-main {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+        gap: 12px 16px;
+    }
+    .rel-meta-col  { grid-column: 2; grid-row: 1; justify-content: flex-end; }
+    .rel-date-col  { display: none; } /* hide on tablet, shown in notes area */
+    .rel-actions-col { grid-column: 1 / -1; justify-content: flex-start; }
+}
+
 @media (max-width: 720px) {
     .donate-row { grid-template-columns: 1fr; }
 }
@@ -203,4 +409,6 @@
     .releases-tabs { width: 100%; }
     .tab-btn { flex: 1; }
     .nav-link { padding: 5px 10px; font-size: 0.65rem; }
+    .rel-row { padding: 16px 18px; }
+    .rel-meta-col { flex-wrap: wrap; gap: 5px; }
 }
