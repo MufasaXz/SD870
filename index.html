@@ -10,6 +10,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Barlow:wght@400;500&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/home.css">
+    
+    <style>
+        /* Authentication Modal Styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
+        .modal-content { background-color: #111; margin: 15% auto; padding: 30px; border: 1px solid #caff00; width: 300px; border-radius: 8px; text-align: center; position: relative; font-family: 'Barlow', sans-serif; }
+        .close-btn { color: #aaa; position: absolute; top: 10px; right: 15px; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .close-btn:hover { color: #caff00; }
+        .auth-input { width: 100%; padding: 10px; margin: 10px 0; background-color: #222; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; font-family: 'Azeret Mono', monospace; }
+        .auth-input:focus { outline: none; border-color: #caff00; }
+        .auth-submit { width: 100%; padding: 10px; background-color: #caff00; color: #000; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 15px; font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; text-transform: uppercase; }
+        .auth-submit:hover { background-color: #a4cc00; }
+    </style>
 </head>
 <body>
 
@@ -19,7 +31,7 @@
         <nav>
             <a href="/" class="nav-logo">ROM_HUB /</a>
             <div class="nav-right">
-                <a href="admin/index.html" class="nav-link accent">Admin</a>
+                <a href="#" id="adminBtn" class="nav-link accent">Admin</a>
             </div>
         </nav>
     </header>
@@ -140,7 +152,6 @@
             So sending moni wen?
         </p>
         <div class="support-grid">
-
             <a href="https://ko-fi.com/nullpointer1101" target="_blank" rel="noopener" class="support-link">
                 <div class="support-icon icon-kofi">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.67-2.059 3.015z"/></svg>
@@ -171,7 +182,6 @@
                 </div>
                 <span class="support-arrow">→</span>
             </a>
-
         </div>
     </section>
 
@@ -187,12 +197,62 @@
         </span>
     </footer>
 
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 style="color: #fff; margin-bottom: 20px; font-family: 'Barlow Condensed', sans-serif;">System Access</h2>
+            <input type="text" id="usernameInput" placeholder="User" class="auth-input">
+            <input type="password" id="passwordInput" placeholder="Key" class="auth-input">
+            <button id="submitLoginBtn" class="auth-submit">AUTHORIZE</button>
+            <p id="errorMsg" style="color: #ff4444; display: none; margin-top: 10px; font-size: 14px;">Access Denied!</p>
+        </div>
+    </div>
+
 </div>
 
 <script>
     document.getElementById('upi-btn').addEventListener('click', e => {
         e.preventDefault();
         window.location.href = 'upi://pay?pa=nullpointe1101@ptaxis&pn=NullPointer';
+    });
+
+    // Authentication Logic
+    const adminBtn = document.getElementById('adminBtn'); 
+    const modal = document.getElementById('loginModal');
+    const closeBtn = document.querySelector('.close-btn');
+    const submitLoginBtn = document.getElementById('submitLoginBtn');
+    const errorMsg = document.getElementById('errorMsg');
+
+    adminBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.style.display = 'block';
+        errorMsg.style.display = 'none';
+    });
+
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    submitLoginBtn.addEventListener('click', function() {
+        const userValue = document.getElementById('usernameInput').value;
+        const passValue = document.getElementById('passwordInput').value;
+
+        // Base64 Encoded Credentials
+        const eU = "YWRtaW4=";
+        const eP = "YWRtaW4xMjM=";
+
+        if (btoa(userValue) === eU && btoa(passValue) === eP) {
+            sessionStorage.setItem('sec_token', 'YXV0aG9yaXplZA=='); 
+            window.location.href = "admin/index.html"; 
+        } else {
+            errorMsg.style.display = 'block';
+        }
     });
 </script>
 
