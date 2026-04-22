@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Custom ROMs, kernels and recoveries for Xiaomi Pad 6 (pipa).">
+    <title>Xiaomi Pad 6 · pipa | ROM Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/device.css">
+</head>
+<body>
+
+<div class="wrap">
+
+    <header>
+        <nav>
+            <div class="nav-left">
+                <a href="../index.html" class="nav-back">
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                        <path d="M6.5 1.5L3 5l3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Home
+                </a>
+                <span class="nav-sep">/</span>
+                <span class="nav-current">pipa</span>
+            </div>
+            <div class="nav-right">
+                <a href="instructions.html" class="nav-link">Instructions</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <p class="page-kicker">pipa</p>
+        <h1 class="page-title">Xiaomi Pad 6</h1>
+        <div class="page-meta">
+            <span class="meta-tag">Snapdragon 870</span>
+            <span class="meta-tag">11" · 144 Hz</span>
+            <span class="meta-tag">8840 mAh</span>
+        </div>
+    </section>
+
+    <section class="releases" id="releases">
+        <p class="section-eyebrow">// Releases</p>
+
+        <div class="releases-tabs">
+            <button class="tab-btn active" data-tab="roms">ROMs</button>
+            <button class="tab-btn" data-tab="kernels">Kernels</button>
+            <button class="tab-btn" data-tab="recoveries">Recoveries</button>
+        </div>
+
+        <!-- Panels — device.js injects content here -->
+        <div class="releases-placeholder active" id="tab-roms"></div>
+        <div class="releases-placeholder" id="tab-kernels"></div>
+        <div class="releases-placeholder" id="tab-recoveries"></div>
+    </section>
+
+    <section class="support" id="support">
+        <div class="support-intro">
+            <p class="section-eyebrow">// Support Your ROM Dev</p>
+            <h2 class="support-title">Keep The Builds Coming</h2>
+            <p class="support-desc">
+                Maintaining ROMs, kernels and recoveries takes real time and hardware.
+                If a build has helped you, consider supporting the person behind it.
+            </p>
+        </div>
+
+        <div class="maintainer-block">
+            <p class="maintainer-label">Null Pointer</p>
+            <div class="donate-row">
+
+                <a href="https://ko-fi.com/nullpointer1101" target="_blank" rel="noopener" class="donate-link">
+                    <div class="donate-icon icon-kofi">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.67-2.059 3.015z"/></svg>
+                    </div>
+                    <div class="donate-info">
+                        <div class="donate-name">Ko-fi</div>
+                    </div>
+                    <span class="donate-arrow">→</span>
+                </a>
+
+                <a href="index.html#" class="donate-link" id="np-upi">
+                    <div class="donate-icon icon-upi">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-1.25 17.292l-4.5-4.364 1.857-1.858 2.643 2.506 5.643-5.784 1.857 1.857-7.5 7.643z"/></svg>
+                    </div>
+                    <div class="donate-info">
+                        <div class="donate-name">UPI</div>
+                        <div class="donate-handle">nullpointe1101@ptaxis</div>
+                    </div>
+                    <span class="donate-arrow">→</span>
+                </a>
+
+                <a href="https://www.paypal.com/paypalme/sheoranpranshu" target="_blank" rel="noopener" class="donate-link">
+                    <div class="donate-icon icon-paypal">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>
+                    </div>
+                    <div class="donate-info">
+                        <div class="donate-name">PayPal</div>
+                    </div>
+                    <span class="donate-arrow">→</span>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="maintainer-block">
+            <p class="maintainer-label">Mufasa</p>
+            <div class="donate-row">
+
+                <div class="donate-link empty">
+                    <div class="donate-icon icon-kofi">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.67-2.059 3.015z"/></svg>
+                    </div>
+                    <div class="donate-info">
+                        <div class="donate-name">Ko-fi</div>
+                        <div class="donate-handle">— not set up yet —</div>
+                    </div>
+                </div>
+
+                <div class="donate-link empty">
+                    <div class="donate-icon icon-upi">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-1.25 17.292l-4.5-4.364 1.857-1.858 2.643 2.506 5.643-5.784 1.857 1.857-7.5 7.643z"/></svg>
+                    </div>
+                    <div class="donate-info">
+                        <div class="donate-name">UPI</div>
+                        <div class="donate-handle">— not set up yet —</div>
+                    </div>
+                </div>
+
+                <div class="donate-link empty">
+                    <div class="donate-icon icon-paypal">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>
+                    </div>
+                    <div class="donate-info">
+                        <div class="donate-name">PayPal</div>
+                        <div class="donate-handle">— not set up yet —</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <span class="foot-text">
+            By <a href="https://mufasaxz.vercel.app" target="_blank" rel="noopener">Mufasa</a>
+            &amp; <a href="https://glitchwraith.vercel.app" target="_blank" rel="noopener">Null Pointer</a>
+            &nbsp;·&nbsp; &copy; 2025–2026
+        </span>
+        <span class="foot-disclaimer">
+            Installing custom ROMs may void your warranty.
+            Back up your data. You are responsible for your device.
+        </span>
+    </footer>
+
+</div>
+
+<!-- UPI deep-link (kept inline — simple one-liner) -->
+<script>
+    document.getElementById('np-upi').addEventListener('click', e => {
+        e.preventDefault();
+        window.location.href = 'upi://pay?pa=nullpointe1101@ptaxis&pn=NullPointer';
+    });
+</script>
+
+<!-- Release data renderer -->
+<script src="../js/device.js"></script>
+
+</body>
+</html>
